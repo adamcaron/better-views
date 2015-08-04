@@ -4,17 +4,17 @@
 <p>By <%= link_to @article.author.name, @article.author %></p>
 <div class="article content">
 	<p><%= @article.body %></p>
-	<%= link_to 'Edit', edit_article_path(@article) %> 
+	<%= link_to 'Edit', edit_article_path(@article) %>
 	<%= link_to 'Destroy', @article, method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>
 
 <!-- 1. Fix the database query in view. This will blow up unless we account for the unsaved comment -->
 <!-- 4. (Back to keynote). Change the code below to render a partial for a collection -->
 
-<% Comment.where(article_id: @article.id).each do |comment| %>
+<% @article.comments.each do |comment| %>
 	<div class="comment content">
 		<%= comment.body %>
-		<%= link_to 'Edit', edit_comment_path(comment) %> 
+		<%= link_to 'Edit', edit_comment_path(comment) %>
 		<%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
 	</div>
 <% end %>
@@ -27,4 +27,3 @@
   <%= f.hidden_field :article_id%>
   <%= f.submit %>
 <% end %>
-
